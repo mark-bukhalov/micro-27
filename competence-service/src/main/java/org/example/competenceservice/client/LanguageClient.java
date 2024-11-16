@@ -21,7 +21,7 @@ public class LanguageClient {
                 .map(String::valueOf)
                 .collect(Collectors.joining(","));
 
-        String url = "http://LANGUAGE_SERVICE/language?ids=" + ids;
+        String url = "http://language-service/api/v1/languages?ids=" + ids;
 
         ResponseEntity<List<LanguageResponseDto>> response = restTemplate.exchange(
                 url,

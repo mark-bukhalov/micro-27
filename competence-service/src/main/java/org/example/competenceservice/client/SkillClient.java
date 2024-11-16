@@ -21,7 +21,7 @@ public class SkillClient {
                 .map(String::valueOf)
                 .collect(Collectors.joining(","));
 
-        String url = "http://SKILL_SERVICE/skills?ids=" + ids;
+        String url = "http://skill-service/api/v1/skills?ids=" + ids;
 
         ResponseEntity<List<SkillResponseDto>> response = restTemplate.exchange(
                 url,

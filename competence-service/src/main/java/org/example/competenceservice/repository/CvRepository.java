@@ -4,8 +4,10 @@ import org.example.competenceservice.data.entity.Cv;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface CvRepository extends JpaRepository<Cv, Long> {
 
-    Cv findByUuid(String uuid);
+    Optional<Cv> findByUuid(String uuid);
 }

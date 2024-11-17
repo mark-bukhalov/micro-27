@@ -25,7 +25,7 @@ public class CompetenceServiceImpl implements CompetenceService {
 
     @Override
     public CompetenceResponseDto get(String uuid) {
-        Cv cv = cvRepository.findByUuid(uuid);
+        Cv cv = cvRepository.findByUuid(uuid).orElseThrow(() -> new RuntimeException("Competence not found for UUID:" + uuid));
 
         List<SkillResponseDto> skillResponseDtoList = getSkillInfo(cv.getSkills());
         List<LanguageResponseDto> languageResponceDtoList = getLanguageInfo(cv.getLanguages());

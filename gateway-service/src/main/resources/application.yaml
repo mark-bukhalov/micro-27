@@ -14,7 +14,7 @@ spring:
         - id: skill-service-route
           uri: lb://skill-service
           predicates:
-            - Path=/api/v1/skills/**\
+            - Path=/api/v1/skills/**
           filters:
             - AuthenticationJwtFilter
 

@@ -1,8 +1,8 @@
 package org.example.competenceservice.usecases.service_impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.competenceservice.client.LanguageClient;
-import org.example.competenceservice.client.SkillClient;
+import org.example.competenceservice.client.LanguageFeignClient;
+import org.example.competenceservice.client.SkillFeignClient;
 import org.example.competenceservice.data.entity.Cv;
 import org.example.competenceservice.data.entity.Language;
 import org.example.competenceservice.data.entity.Skill;
@@ -20,8 +20,8 @@ import java.util.List;
 public class CompetenceServiceImpl implements CompetenceService {
 
     private final CvRepository cvRepository;
-    private final SkillClient skillClient;
-    private final LanguageClient languageClient;
+    private final SkillFeignClient skillClient;
+    private final LanguageFeignClient languageClient;
 
     @Override
     public CompetenceResponseDto get(String uuid) {
@@ -37,13 +37,13 @@ public class CompetenceServiceImpl implements CompetenceService {
         List<Long> skillsIdList = skillList.stream()
                 .map(Skill::getId).toList();
 
-        return skillClient.getSkillsInfo(skillsIdList);
+        return skillClient.getSkillListByIdList(skillsIdList);
     }
 
     private List<LanguageResponseDto> getLanguageInfo(List<Language> languageList) {
         List<Long> languageIdList = languageList.stream()
                 .map(Language::getId).toList();
 
-        return languageClient.getLanguageInfo(languageIdList);
+        return languageClient.getLanguageListByIdList(languageIdList);
     }
 }

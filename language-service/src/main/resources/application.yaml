@@ -2,7 +2,7 @@ spring:
   application:
     name: language-service
   datasource:
-    url: jdbc:h2:mem:competence
+    url: jdbc:h2:mem:language
     username: sa
     password:
     driver-class-name: org.h2.Driver

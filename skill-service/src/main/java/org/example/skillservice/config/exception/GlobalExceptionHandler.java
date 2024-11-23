@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -14,12 +15,25 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleAllExceptions(Exception ex) {
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+        return createErrorResponseEntity(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<ErrorResponse> handleResourceNotFoundException(ResponseStatusException ex) {
+        return createErrorResponseEntity(ex, HttpStatus.valueOf(ex.getStatusCode().value()));
+    }
+
+    private ResponseEntity<ErrorResponse> createErrorResponseEntity(Exception ex, HttpStatus status) {
+        ErrorResponse errorResponse = createDefaultErrorResponse(ex, status.value());
+        return new ResponseEntity<>(errorResponse, status);
+    }
+
+    private ErrorResponse createDefaultErrorResponse(Exception ex, int status) {
+        return new ErrorResponse(
+                status,
                 ex.getMessage(),
                 LocalDateTime.now().format(formatter)
         );
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
 

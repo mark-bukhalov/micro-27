@@ -11,6 +11,7 @@ import org.example.competenceservice.usecases.dto.CompetenceResponseDto;
 import org.example.competenceservice.usecases.dto.LanguageResponseDto;
 import org.example.competenceservice.usecases.dto.SkillResponseDto;
 import org.example.competenceservice.usecases.service.CompetenceService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,6 +32,12 @@ public class CompetenceServiceImpl implements CompetenceService {
         List<LanguageResponseDto> languageResponceDtoList = getLanguageInfo(cv.getLanguages());
 
         return new CompetenceResponseDto(languageResponceDtoList, skillResponseDtoList);
+    }
+
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @Override
+    public String adminPage() {
+        return "Admin page";
     }
 
     private List<SkillResponseDto> getSkillInfo(List<Skill> skillList) {

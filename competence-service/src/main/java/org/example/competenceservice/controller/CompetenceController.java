@@ -23,4 +23,10 @@ public class CompetenceController {
         log.info("Get competence for UUID: {}", uuid);
         return ResponseEntity.ok(competenceService.get(uuid));
     }
+
+    @GetMapping("/admin")
+    ResponseEntity<String> getAdminPage() {
+        log.info("Get admin page");
+        return ResponseEntity.ok(competenceService.adminPage());
+    }
 }
